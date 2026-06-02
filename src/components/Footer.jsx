@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import logo from "../assets/images/logo.png";
+import image from "../assets/images/logo.png";
 
 export default function Footer() {
   return (
@@ -14,7 +14,7 @@ export default function Footer() {
             <div className="flex items-center gap-3 mb-4">
               <div className="w-24 h-24 rounded-full border-4 border-teal-500 flex items-center justify-center bg-white overflow-hidden">
                 <img
-                  src={logo}
+                  src={image}
                   alt="Future Founders Logo"
                   className="w-36 h-36 object-cover"
                 />
