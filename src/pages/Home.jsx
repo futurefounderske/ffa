@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import SEOHead from "../components/SEOHead";
 import { useState, useEffect, useRef } from "react";
 import logo from "../assets/images/logo.png";
-import qrcode from "../assets/images/qr.jpeg"; // Add this import
+import qrcode from "../assets/images/qr.jpeg";
 
 const stats = [
   { value: "10", label: "Weeks", sub: "Intensive bootcamp" },
