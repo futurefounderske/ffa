@@ -1,0 +1,155 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --navy-900: #1a2741; /* Lighter and less saturated than #0a1628 */
+  --navy-800: #243354; /* Lighter and less saturated than #0d1f3c */
+  --teal-500: #1aaa9e;
+  --orange-500: #e85d2c;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "DM Sans", sans-serif;
+  background: linear-gradient(135deg, #1a2741 0%, #16213a 100%);
+  color: #e2e8f0;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Syne", sans-serif;
+}
+
+/* Noise texture overlay - reduced opacity for smoother look */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.02'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.3;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #1a2741;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--teal-500);
+  border-radius: 3px;
+}
+
+/* Utility */
+.gradient-text {
+  background: linear-gradient(135deg, #2ec4b6 0%, #1aaa9e 50%, #e85d2c 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.teal-gradient-text {
+  background: linear-gradient(135deg, #2ec4b6, #1aaa9e);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.card-glass {
+  background: rgba(36, 51, 84, 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(46, 196, 182, 0.12);
+}
+
+.section-divider {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(46, 196, 182, 0.3),
+    transparent
+  );
+}
+
+/* Global readability improvements */
+.label-tag {
+  font-size: 0.8125rem;
+  letter-spacing: 0.12em;
+}
+
+/* Small body copy minimum */
+p,
+li,
+span {
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Icon containers — guarantee centering */
+.icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@layer utilities {
+  .animation-delay-100 {
+    animation-delay: 100ms;
+  }
+  .animation-delay-200 {
+    animation-delay: 200ms;
+  }
+  .animation-delay-300 {
+    animation-delay: 300ms;
+  }
+  .animation-delay-400 {
+    animation-delay: 400ms;
+  }
+  .animation-delay-500 {
+    animation-delay: 500ms;
+  }
+  .opacity-0-start {
+    opacity: 0;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float 3s ease-in-out infinite 1.5s;
+}
+
+.animate-float-slow {
+  animation: float 4s ease-in-out infinite 0.5s;
+}
