@@ -367,7 +367,7 @@ export default function Navbar() {
               </div>
 
               <div className="modal-link-wrapper">
-                <p className="modal-link-label">Or click the link below:</p>
+                <p className="modal-link-label">Or click the link below</p>
                 <a
                   href="https://docs.google.com/forms/d/e/1FAIpQLSc0_X3ffTWpNY5lYHlkiu9vvFxMspar3tsAtkgVtuytPa4h9g/viewform"
                   target="_blank"
