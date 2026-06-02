@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import SEOHead from "../components/SEOHead";
 import { useState, useEffect, useRef } from "react";
 import logo from "../assets/images/logo.png";
+import qrcode from "../assets/images/qr.jpeg"; // Add this import
 
 const stats = [
   { value: "10", label: "Weeks", sub: "Intensive bootcamp" },
@@ -128,6 +129,8 @@ const partners = [
 export default function Home() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
+  const [showQrModal, setShowQrModal] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
   const carouselRef = useRef(null);
   const intervalRef = useRef(null);
 
@@ -175,6 +178,36 @@ export default function Home() {
     };
   }, [isPlaying, itemsPerView]);
 
+  // Handle modal animation on mount/unmount
+  useEffect(() => {
+    if (showQrModal) {
+      setTimeout(() => setModalVisible(true), 10);
+    } else {
+      setModalVisible(false);
+    }
+  }, [showQrModal]);
+
+  // Close modal when pressing Escape key
+  useEffect(() => {
+    const handleEsc = (e) => {
+      if (e.key === "Escape") handleCloseModal();
+    };
+    window.addEventListener("keydown", handleEsc);
+    return () => window.removeEventListener("keydown", handleEsc);
+  }, []);
+
+  // Prevent body scroll when modal is open
+  useEffect(() => {
+    if (showQrModal) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [showQrModal]);
+
   const handlePrev = () => {
     setCurrentIndex((prevIndex) => {
       const maxIndex = Math.max(0, partners.length - itemsPerView);
@@ -203,8 +236,77 @@ export default function Home() {
     setIsPlaying(true);
   };
 
+  const handleApplyClick = (e) => {
+    e.preventDefault();
+    setShowQrModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalVisible(false);
+    setTimeout(() => setShowQrModal(false), 200);
+  };
+
   return (
     <>
+      <style jsx>{`
+        @keyframes fadeInBackdrop {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+
+        @keyframes fadeOutBackdrop {
+          from {
+            opacity: 1;
+          }
+          to {
+            opacity: 0;
+          }
+        }
+
+        @keyframes slideUpFadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(20px) scale(0.95);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
+        }
+
+        @keyframes slideDownFadeOut {
+          from {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
+          to {
+            opacity: 0;
+            transform: translateY(20px) scale(0.95);
+          }
+        }
+
+        .backdrop-animate-in {
+          animation: fadeInBackdrop 0.25s ease-out forwards;
+        }
+
+        .backdrop-animate-out {
+          animation: fadeOutBackdrop 0.2s ease-out forwards;
+        }
+
+        .modal-animate-in {
+          animation: slideUpFadeIn 0.3s cubic-bezier(0.34, 1.2, 0.64, 1)
+            forwards;
+        }
+
+        .modal-animate-out {
+          animation: slideDownFadeOut 0.2s ease-out forwards;
+        }
+      `}</style>
+
       <SEOHead
         description="Future Founders Academy equips young Kenyans with entrepreneurship skills through a hands-on 10-week bootcamp. Build your business, shape Kenya. Starting 22 June 2026."
         path="/"
@@ -276,10 +378,8 @@ export default function Home() {
                 className="flex flex-wrap gap-4 animate-fade-up opacity-0-start animation-delay-400"
                 style={{ animationFillMode: "forwards" }}
               >
-                <a
-                  href="https://www.futurefoundersbootcamp.ke"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  onClick={handleApplyClick}
                   className="inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-400 text-white font-display font-bold px-8 py-4 rounded-xl text-base transition-all duration-200 hover:shadow-xl hover:shadow-orange-500/30 hover:-translate-y-1"
                 >
                   Apply Now
@@ -296,7 +396,7 @@ export default function Home() {
                       d="M17 8l4 4m0 0l-4 4m4-4H3"
                     />
                   </svg>
-                </a>
+                </button>
                 <Link
                   to="/what-we-do"
                   className="inline-flex items-center gap-2 border border-teal-500/40 hover:border-teal-400 text-teal-400 hover:text-teal-300 font-display font-semibold px-8 py-4 rounded-xl text-base transition-all duration-200 hover:bg-teal-500/5"
@@ -573,10 +673,8 @@ export default function Home() {
                 No prior business experience required — only a willing heart to
                 learn and grow.
               </p>
-              <a
-                href="https://www.futurefoundersbootcamp.ke"
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                onClick={handleApplyClick}
                 className="inline-flex items-center gap-3 bg-orange-500 hover:bg-orange-400 text-white font-display font-bold px-10 py-4 rounded-xl text-lg transition-all duration-200 hover:shadow-2xl hover:shadow-orange-500/30 hover:-translate-y-1"
               >
                 Scan QR or Apply Online
@@ -593,11 +691,102 @@ export default function Home() {
                     d="M17 8l4 4m0 0l-4 4m4-4H3"
                   />
                 </svg>
-              </a>
+              </button>
             </div>
           </div>
         </div>
       </section>
+
+      {/* QR Code Modal */}
+      {showQrModal && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          onClick={handleCloseModal}
+        >
+          {/* Backdrop with smooth fade */}
+          <div
+            className={`absolute inset-0 bg-black/70 backdrop-blur-sm ${
+              modalVisible ? "backdrop-animate-in" : "backdrop-animate-out"
+            }`}
+          />
+
+          {/* Modal Content with smooth slide-up + fade */}
+          <div
+            className={`relative bg-navy-800 rounded-2xl shadow-2xl max-w-sm w-full p-6 border border-teal-500/30 ${
+              modalVisible ? "modal-animate-in" : "modal-animate-out"
+            }`}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close button */}
+            <button
+              onClick={handleCloseModal}
+              className="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors duration-200"
+              aria-label="Close modal"
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+
+            {/* QR Code Image */}
+            <div className="flex flex-col items-center text-center">
+              <h3 className="text-2xl font-display font-bold text-white mb-2">
+                Apply Now
+              </h3>
+              <p className="text-slate-300 text-sm font-body mb-6">
+                Scan the QR code to access the application form
+              </p>
+
+              <div className="bg-white p-4 rounded-xl mb-6 transition-transform duration-300 hover:scale-105">
+                <img
+                  src={qrcode}
+                  alt="Application QR Code"
+                  className="w-64 h-64 object-contain"
+                />
+              </div>
+
+              {/* Direct Link */}
+              <div className="w-full pt-4 border-t border-white/10">
+                <p className="text-slate-300 text-sm font-body mb-3">
+                  Or click the link below:
+                </p>
+                <a
+                  href="https://docs.google.com/forms/d/e/1FAIpQLSc0_X3ffTWpNY5lYHlkiu9vvFxMspar3tsAtkgVtuytPa4h9g/viewform"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-teal-400 hover:text-teal-300 font-body text-sm underline underline-offset-2 transition-all duration-200 hover:gap-3"
+                  onClick={handleCloseModal}
+                >
+                  Open Application Form
+                  <svg
+                    className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                    />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }

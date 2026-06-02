@@ -246,7 +246,7 @@ export default function About() {
                 NO PRIOR BUSINESS EXPERIENCE IS REQUIRED
               </p>
               <a
-                href="https://www.futurefoundersbootcamp.ke"
+                href="https://docs.google.com/forms/d/e/1FAIpQLSc0_X3ffTWpNY5lYHlkiu9vvFxMspar3tsAtkgVtuytPa4h9g/viewform"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-400 text-white font-display font-bold px-8 py-3.5 rounded-xl transition-all hover:shadow-lg hover:shadow-orange-500/25 hover:-translate-y-0.5"
