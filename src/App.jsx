@@ -3,7 +3,6 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import About from "./pages/About";
-import MissionVision from "./pages/MissionVision";
 import WhatWeDo from "./pages/WhatWeDo";
 import Contact from "./pages/Contact";
 import ScrollToTop from "./components/ScrollToTop";
@@ -24,7 +23,6 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
-            <Route path="/mission-vision" element={<MissionVision />} />
             {/* <Route path="/contact" element={<Contact />} /> */}
             <Route path="/gallery" element={<Gallery />} />
             <Route path="/mentors" element={<Mentors />} />

@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import SEOHead from "../components/SEOHead";
 import { useState, useEffect, useRef } from "react";
 import logo from "../assets/images/logo.png";
+import home from "../assets/images/home.png";
 import qrcode from "../assets/images/qr.jpeg";
 
 const stats = [
@@ -416,15 +417,14 @@ export default function Home() {
                 <div className="absolute inset-0 bg-teal-500/20 rounded-full blur-3xl" />
 
                 {/* Animated border rings - Larger sizes */}
-                <div className="relative w-[450px] h-[450px] rounded-full border-4 border-teal-500/30 flex items-center justify-center">
-                  <div className="w-[380px] h-[380px] rounded-full border-4 border-orange-500/20 flex items-center justify-center">
-                    <div className="w-[310px] h-[310px] rounded-full border-2 border-teal-500/10 flex items-center justify-center">
-                      {/* White background for logo */}
-                      <div className="w-[280px] h-[280px] rounded-full bg-white shadow-2xl flex items-center justify-center p-4">
+                <div className="relative w-[480px] h-[480px] rounded-full border-4 border-teal-500/30 flex items-center justify-center overflow-hidden">
+                  <div className="w-[410px] h-[410px] rounded-full border-4 border-orange-500/20 flex items-center justify-center overflow-hidden">
+                    <div className="w-[340px] h-[340px] rounded-full border-teal-500/10 flex items-center justify-center overflow-hidden">
+                      <div className="w-[310px] h-[310px] rounded-full bg-white shadow-2xl flex items-center justify-center overflow-hidden">
                         <img
-                          src={logo}
-                          alt="Future Founders Logo"
-                          className="w-full h-full object-contain rounded-full"
+                          src={home}
+                          alt="Students Learning"
+                          className="w-full h-full object-cover"
                         />
                       </div>
                     </div>
