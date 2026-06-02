@@ -4,6 +4,8 @@ import { useState, useEffect, useRef } from "react";
 import logo from "../assets/images/logo.png";
 import home from "../assets/images/home.png";
 import qrcode from "../assets/images/qr.jpeg";
+import partners from "../data/partners/partners.js";
+import "../styles/home.css";
 
 const stats = [
   { value: "10", label: "Weeks", sub: "Intensive bootcamp" },
@@ -75,58 +77,6 @@ const pillars = [
   },
 ];
 
-// Partners data
-const partners = [
-  {
-    id: 1,
-    name: "Kenya Commercial Bank",
-    logo: "https://via.placeholder.com/150x80?text=KCB",
-    description: "Banking partner",
-  },
-  {
-    id: 2,
-    name: "Safaricom",
-    logo: "https://via.placeholder.com/150x80?text=Safaricom",
-    description: "Telecommunications partner",
-  },
-  {
-    id: 3,
-    name: "Equity Bank",
-    logo: "https://via.placeholder.com/150x80?text=Equity",
-    description: "Financial partner",
-  },
-  {
-    id: 4,
-    name: "Microsoft",
-    logo: "https://via.placeholder.com/150x80?text=Microsoft",
-    description: "Technology partner",
-  },
-  {
-    id: 5,
-    name: "Google",
-    logo: "https://via.placeholder.com/150x80?text=Google",
-    description: "Digital skills partner",
-  },
-  {
-    id: 6,
-    name: "UNICEF",
-    logo: "https://via.placeholder.com/150x80?text=UNICEF",
-    description: "Development partner",
-  },
-  {
-    id: 7,
-    name: "Strathmore University",
-    logo: "https://via.placeholder.com/150x80?text=Strathmore",
-    description: "Academic partner",
-  },
-  {
-    id: 8,
-    name: "NCBA Bank",
-    logo: "https://via.placeholder.com/150x80?text=NCBA",
-    description: "Financial partner",
-  },
-];
-
 export default function Home() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
@@ -154,9 +104,9 @@ export default function Home() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Auto-play carousel
+  // Auto-play carousel - only if partners.length > itemsPerView
   useEffect(() => {
-    if (isPlaying) {
+    if (isPlaying && partners.length > itemsPerView) {
       intervalRef.current = setInterval(() => {
         setCurrentIndex((prevIndex) => {
           const maxIndex = Math.max(0, partners.length - itemsPerView);
@@ -177,7 +127,7 @@ export default function Home() {
         clearInterval(intervalRef.current);
       }
     };
-  }, [isPlaying, itemsPerView]);
+  }, [isPlaying, itemsPerView, partners.length]);
 
   // Handle modal animation on mount/unmount
   useEffect(() => {
@@ -209,32 +159,14 @@ export default function Home() {
     };
   }, [showQrModal]);
 
-  const handlePrev = () => {
-    setCurrentIndex((prevIndex) => {
-      const maxIndex = Math.max(0, partners.length - itemsPerView);
-      if (prevIndex <= 0) {
-        return maxIndex;
-      }
-      return prevIndex - 1;
-    });
-  };
-
-  const handleNext = () => {
-    setCurrentIndex((prevIndex) => {
-      const maxIndex = Math.max(0, partners.length - itemsPerView);
-      if (prevIndex >= maxIndex) {
-        return 0;
-      }
-      return prevIndex + 1;
-    });
-  };
-
   const handleMouseEnter = () => {
     setIsPlaying(false);
   };
 
   const handleMouseLeave = () => {
-    setIsPlaying(true);
+    if (partners.length > itemsPerView) {
+      setIsPlaying(true);
+    }
   };
 
   const handleApplyClick = (e) => {
@@ -249,65 +181,6 @@ export default function Home() {
 
   return (
     <>
-      <style jsx>{`
-        @keyframes fadeInBackdrop {
-          from {
-            opacity: 0;
-          }
-          to {
-            opacity: 1;
-          }
-        }
-
-        @keyframes fadeOutBackdrop {
-          from {
-            opacity: 1;
-          }
-          to {
-            opacity: 0;
-          }
-        }
-
-        @keyframes slideUpFadeIn {
-          from {
-            opacity: 0;
-            transform: translateY(20px) scale(0.95);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-          }
-        }
-
-        @keyframes slideDownFadeOut {
-          from {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-          }
-          to {
-            opacity: 0;
-            transform: translateY(20px) scale(0.95);
-          }
-        }
-
-        .backdrop-animate-in {
-          animation: fadeInBackdrop 0.25s ease-out forwards;
-        }
-
-        .backdrop-animate-out {
-          animation: fadeOutBackdrop 0.2s ease-out forwards;
-        }
-
-        .modal-animate-in {
-          animation: slideUpFadeIn 0.3s cubic-bezier(0.34, 1.2, 0.64, 1)
-            forwards;
-        }
-
-        .modal-animate-out {
-          animation: slideDownFadeOut 0.2s ease-out forwards;
-        }
-      `}</style>
-
       <SEOHead
         description="Future Founders Academy equips young Kenyans with entrepreneurship skills through a hands-on 10-week bootcamp. Build your business, shape Kenya. Starting 22 June 2026."
         path="/"
@@ -564,9 +437,9 @@ export default function Home() {
                     className="flex-shrink-0 px-4"
                     style={{ width: `${100 / itemsPerView}%` }}
                   >
-                    <div className="bg-navy-800/50 rounded-xl p-6 border border-teal-500/20 hover:border-teal-500/40 transition-all duration-300 hover:-translate-y-1 group">
+                    <div className="bg-navy-800/50 rounded-xl p-6 border border-teal-500/20 hover:border-teal-500/40 transition-all duration-300 hover:-translate-y-1 group cursor-pointer">
                       <div className="flex flex-col items-center text-center">
-                        <div className="w-32 h-20 flex items-center justify-center mb-4">
+                        <div className="w-40 h-32 flex items-center justify-center mb-4">
                           <img
                             src={partner.logo}
                             alt={partner.name}
@@ -585,72 +458,37 @@ export default function Home() {
                 ))}
               </div>
             </div>
-
-            {/* Navigation Buttons */}
-            <button
-              onClick={handlePrev}
-              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-6 w-10 h-10 bg-navy-800/80 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-teal-500 transition-all duration-200 z-10"
-            >
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M15 19l-7-7 7-7"
-                />
-              </svg>
-            </button>
-
-            <button
-              onClick={handleNext}
-              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-6 w-10 h-10 bg-navy-800/80 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-teal-500 transition-all duration-200 z-10"
-            >
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9 5l7 7-7 7"
-                />
-              </svg>
-            </button>
           </div>
 
-          {/* Dots Indicator */}
-          <div className="flex justify-center gap-2 mt-8">
-            {Array.from({
-              length: Math.max(1, Math.ceil(partners.length / itemsPerView)),
-            }).map((_, idx) => (
-              <button
-                key={idx}
-                onClick={() => {
-                  setCurrentIndex(idx * itemsPerView);
-                }}
-                className={`h-2 rounded-full transition-all duration-300 ${
-                  Math.floor(currentIndex / itemsPerView) === idx
-                    ? "w-8 bg-teal-500"
-                    : "w-2 bg-navy-600 hover:bg-teal-400/50"
-                }`}
-              />
-            ))}
-          </div>
+          {/* Dots Indicator - Only show if more items than visible */}
+          {partners.length > itemsPerView && (
+            <div className="flex justify-center gap-2 mt-8">
+              {Array.from({
+                length: Math.max(1, Math.ceil(partners.length / itemsPerView)),
+              }).map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => {
+                    setCurrentIndex(idx * itemsPerView);
+                  }}
+                  className={`h-2 rounded-full transition-all duration-300 ${
+                    Math.floor(currentIndex / itemsPerView) === idx
+                      ? "w-8 bg-teal-500"
+                      : "w-2 bg-navy-600 hover:bg-teal-400/50"
+                  }`}
+                />
+              ))}
+            </div>
+          )}
 
           {/* Pause/Play Indicator */}
-          <div className="text-center mt-4">
-            <p className="text-slate-500 text-sm">
-              {!isPlaying && "⏸️ Carousel paused — hover to resume"}
-            </p>
-          </div>
+          {partners.length > itemsPerView && (
+            <div className="text-center mt-4">
+              <p className="text-slate-500 text-sm">
+                {!isPlaying && "⏸️ Paused — hover to resume scrolling"}
+              </p>
+            </div>
+          )}
         </div>
       </section>
 
