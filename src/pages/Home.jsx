@@ -187,7 +187,7 @@ export default function Home() {
       />
 
       {/* Hero */}
-      <section className="relative min-h-screen flex items-center pt-24 pb-20 overflow-hidden">
+      <section className="relative min-h-screen flex items-center pt-32 pb-20 overflow-hidden">
         {/* Background effects */}
         <div className="absolute inset-0 bg-navy-900" />
         <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-teal-500/5 to-transparent" />
