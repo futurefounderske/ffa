@@ -54,20 +54,22 @@
   animation: slideDownFadeOut 0.2s ease-out forwards;
 }
 
-@keyframes scroll {
-  0% {
+.marquee-track {
+  width: max-content;
+  display: flex;
+  animation: marquee 30s linear infinite;
+  animation-play-state: running;
+}
+
+.marquee-track.paused {
+  animation-play-state: paused;
+}
+
+@keyframes marquee {
+  from {
     transform: translateX(0);
   }
-  100% {
+  to {
     transform: translateX(-50%);
   }
-}
-
-.animate-scroll {
-  animation: scroll 30s linear infinite;
-}
-
-/* Pause animation on hover */
-.animate-scroll:hover {
-  animation-play-state: paused;
 }

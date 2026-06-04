@@ -1,92 +1,13 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import SEOHead from "../components/SEOHead";
-
-const galleryItems = [
-  {
-    id: 1,
-    type: "image",
-    src: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800",
-    alt: "Students in workshop",
-    title: "Innovation Workshop",
-    description: "Students collaborating on innovative business ideas",
-  },
-  {
-    id: 2,
-    type: "image",
-    src: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800",
-    alt: "Team collaboration",
-    title: "Team Building",
-    description: "Building strong teams through collaborative activities",
-  },
-  {
-    id: 3,
-    type: "video",
-    src: "https://www.w3schools.com/html/mov_bbb.mp4",
-    poster:
-      "https://images.unsplash.com/photo-1531482615713-2afd69097998?w=800",
-    alt: "Mentorship session",
-    title: "Mentorship Program",
-    description: "One-on-one mentorship sessions with industry leaders",
-  },
-  {
-    id: 4,
-    type: "image",
-    src: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=800",
-    alt: "Coding bootcamp",
-    title: "Coding Bootcamp",
-    description: "Intensive coding sessions for future tech entrepreneurs",
-  },
-  {
-    id: 5,
-    type: "video",
-    src: "https://www.w3schools.com/html/mov_bbb.mp4",
-    poster: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800",
-    alt: "Presentation day",
-    title: "Demo Day",
-    description: "Students pitching their business ideas to investors",
-  },
-  {
-    id: 6,
-    type: "image",
-    src: "https://images.unsplash.com/photo-1544531585-9847b68c8c86?w=800",
-    alt: "Networking event",
-    title: "Networking Mixer",
-    description: "Building valuable connections with industry professionals",
-  },
-  {
-    id: 7,
-    type: "image",
-    src: "https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?w=800",
-    alt: "Design thinking session",
-    title: "Design Thinking",
-    description: "Creative problem-solving through design thinking workshops",
-  },
-  {
-    id: 8,
-    type: "video",
-    src: "https://www.w3schools.com/html/mov_bbb.mp4",
-    poster:
-      "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800",
-    alt: "Group project",
-    title: "Collaborative Project",
-    description: "Team-based projects solving real-world challenges",
-  },
-  {
-    id: 9,
-    type: "image",
-    src: "https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=800",
-    alt: "Award ceremony",
-    title: "Graduation Day",
-    description: "Celebrating the achievements of our graduates",
-  },
-];
+import gallery from "../data/gallery/gallery.js";
 
 export default function Gallery() {
   const [selectedItem, setSelectedItem] = useState(null);
   const [filter, setFilter] = useState("all");
 
-  const filteredItems = galleryItems.filter((item) => {
+  const filteredItems = gallery.filter((item) => {
     if (filter === "all") return true;
     return item.type === filter;
   });
@@ -242,23 +163,11 @@ export default function Gallery() {
                         <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/40 transition-all">
                           <div className="w-16 h-16 rounded-full bg-teal-500/90 backdrop-blur-sm flex items-center justify-center transform transition-transform group-hover:scale-110">
                             <svg
-                              className="w-8 h-8 text-white ml-1"
-                              fill="none"
-                              stroke="currentColor"
+                              className="w-8 h-8 text-white"
+                              fill="currentColor"
                               viewBox="0 0 24 24"
                             >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"
-                              />
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                              />
+                              <path d="M8 5v14l11-7z" />
                             </svg>
                           </div>
                         </div>
@@ -341,23 +250,11 @@ export default function Gallery() {
                           </svg>
                         ) : (
                           <svg
-                            className="w-5 h-5 text-white ml-0.5"
-                            fill="none"
-                            stroke="currentColor"
+                            className="w-5 h-5 text-white"
+                            fill="currentColor"
                             viewBox="0 0 24 24"
                           >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"
-                            />
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                            />
+                            <path d="M8 5v14l11-7z" />
                           </svg>
                         )}
                       </div>

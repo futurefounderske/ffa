@@ -16,7 +16,7 @@ export default function Footer() {
                 <img
                   src={logo}
                   alt="Future Founders Logo"
-                  className="w-36 h-36 object-cover"
+                  className="w-32 h-32 object-cover"
                 />
               </div>
               <div>

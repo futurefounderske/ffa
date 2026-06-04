@@ -122,7 +122,7 @@ export default function Navbar() {
               <img
                 src={logo}
                 alt="Future Founders Logo"
-                className="logo-image"
+                className="logo-image w-28 h-28"
               />
             </div>
             <div className="logo-text">

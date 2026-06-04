@@ -78,12 +78,10 @@ const pillars = [
 ];
 
 export default function Home() {
-  const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
   const [showQrModal, setShowQrModal] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const carouselRef = useRef(null);
-  const intervalRef = useRef(null);
 
   // Number of items to show based on screen size
   const getItemsPerView = () => {
@@ -103,31 +101,6 @@ export default function Home() {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-
-  // Auto-play carousel - only if partners.length > itemsPerView
-  useEffect(() => {
-    if (isPlaying && partners.length > itemsPerView) {
-      intervalRef.current = setInterval(() => {
-        setCurrentIndex((prevIndex) => {
-          const maxIndex = Math.max(0, partners.length - itemsPerView);
-          if (prevIndex >= maxIndex) {
-            return 0;
-          }
-          return prevIndex + 1;
-        });
-      }, 3000);
-    } else {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-      }
-    }
-
-    return () => {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-      }
-    };
-  }, [isPlaying, itemsPerView, partners.length]);
 
   // Handle modal animation on mount/unmount
   useEffect(() => {
@@ -164,9 +137,7 @@ export default function Home() {
   };
 
   const handleMouseLeave = () => {
-    if (partners.length > itemsPerView) {
-      setIsPlaying(true);
-    }
+    setIsPlaying(true);
   };
 
   const handleApplyClick = (e) => {
@@ -182,7 +153,7 @@ export default function Home() {
   return (
     <>
       <SEOHead
-        description="Future Founders Academy equips young Kenyans with entrepreneurship skills through a hands-on 10-week bootcamp. Build your business, shape Kenya. Starting 22 June 2026."
+        description="Future Founders Academy equips young Kenyans with entrepreneurship skills through a hands-on 10-week bootcamp. Build your business, shape the Future. Starting 22 June 2026."
         path="/"
       />
       {/* Hero */}
@@ -234,7 +205,7 @@ export default function Home() {
                   className="block text-5xl sm:text-6xl lg:text-7xl teal-gradient-text animate-fade-up opacity-0-start animation-delay-200"
                   style={{ animationFillMode: "forwards" }}
                 >
-                  Shape Kenya.
+                  Shape The Future.
                 </span>
               </h1>
 
@@ -402,10 +373,12 @@ export default function Home() {
             <span className="text-teal-400 text-md font-display font-semibold uppercase tracking-widest">
               Our Partners
             </span>
+
             <h2 className="font-display font-bold text-3xl sm:text-4xl text-white mt-3">
               Trusted by Leading{" "}
               <span className="teal-gradient-text">Organizations</span>
             </h2>
+
             <p className="text-slate-300 font-body text-lg max-w-2xl mx-auto mt-4">
               We collaborate with industry leaders to deliver exceptional
               entrepreneurial education
@@ -413,99 +386,39 @@ export default function Home() {
           </div>
 
           <div
-            className="relative"
+            className="relative overflow-hidden"
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
           >
-            {/* Carousel Container */}
-            <div className="overflow-hidden">
-              <div
-                ref={carouselRef}
-                className="flex"
-                style={{
-                  animation: isPlaying
-                    ? `scroll ${partners.length * 3}s linear infinite`
-                    : "none",
-                }}
-              >
-                {/* Original partners */}
-                {partners.map((partner) => (
-                  <div
-                    key={partner.id}
-                    className="flex-shrink-0 px-4"
-                    style={{ width: `${100 / itemsPerView}%` }}
-                  >
-                    <div className="bg-navy-800/50 rounded-xl p-6 border border-teal-500/20 hover:border-teal-500/40 transition-all duration-300 hover:-translate-y-1 group cursor-pointer">
-                      <div className="flex flex-col items-center text-center">
-                        <div className="w-40 h-32 flex items-center justify-center mb-4">
-                          <img
-                            src={partner.logo}
-                            alt={partner.name}
-                            className="max-w-full max-h-full object-contain opacity-80 group-hover:opacity-100 transition-opacity"
-                          />
-                        </div>
-                        <h3 className="text-white font-display font-semibold text-lg">
-                          {partner.name}
-                        </h3>
-                        <p className="text-slate-400 text-sm mt-1">
-                          {partner.description}
-                        </p>
+            <div className={`marquee-track ${!isPlaying ? "paused" : ""}`}>
+              {[...partners, ...partners].map((partner, index) => (
+                <div
+                  key={`${partner.id}-${index}`}
+                  className="flex-shrink-0 px-4"
+                  style={{ width: "300px" }}
+                >
+                  <div className="bg-navy-800/50 rounded-xl p-6 border border-teal-500/20 hover:border-teal-500/40 transition-all duration-300 hover:-translate-y-1 group cursor-pointer">
+                    <div className="flex flex-col items-center text-center">
+                      <div className="w-40 h-32 flex items-center justify-center mb-4">
+                        <img
+                          src={partner.logo}
+                          alt={partner.name}
+                          className="max-w-full max-h-full object-contain opacity-80 group-hover:opacity-100 transition-opacity"
+                        />
                       </div>
-                    </div>
-                  </div>
-                ))}
-                {/* Duplicate partners for seamless loop */}
-                {partners.map((partner) => (
-                  <div
-                    key={`${partner.id}-duplicate`}
-                    className="flex-shrink-0 px-4"
-                    style={{ width: `${100 / itemsPerView}%` }}
-                  >
-                    <div className="bg-navy-800/50 rounded-xl p-6 border border-teal-500/20 hover:border-teal-500/40 transition-all duration-300 hover:-translate-y-1 group cursor-pointer">
-                      <div className="flex flex-col items-center text-center">
-                        <div className="w-40 h-32 flex items-center justify-center mb-4">
-                          <img
-                            src={partner.logo}
-                            alt={partner.name}
-                            className="max-w-full max-h-full object-contain opacity-80 group-hover:opacity-100 transition-opacity"
-                          />
-                        </div>
-                        <h3 className="text-white font-display font-semibold text-lg">
-                          {partner.name}
-                        </h3>
-                        <p className="text-slate-400 text-sm mt-1">
-                          {partner.description}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
 
-            {/* Dots Indicator */}
-            {partners.length > itemsPerView && (
-              <div className="flex justify-center gap-2 mt-8">
-                {Array.from({
-                  length: Math.max(
-                    1,
-                    Math.ceil(partners.length / itemsPerView),
-                  ),
-                }).map((_, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => {
-                      setCurrentIndex(idx * itemsPerView);
-                    }}
-                    className={`h-2 rounded-full transition-all duration-300 ${
-                      Math.floor(currentIndex / itemsPerView) === idx
-                        ? "w-8 bg-teal-500"
-                        : "w-2 bg-navy-600 hover:bg-teal-400/50"
-                    }`}
-                  />
-                ))}
-              </div>
-            )}
+                      <h3 className="text-white font-display font-semibold text-lg">
+                        {partner.name}
+                      </h3>
+
+                      <p className="text-slate-400 text-sm mt-1">
+                        {partner.description}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>

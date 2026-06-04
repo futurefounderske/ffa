@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import SEOHead from "../components/SEOHead";
+import video1 from "../assets/images/gallery/video-1.mp4";
 
 const Learning = () => {
   const [activeTab, setActiveTab] = useState("businessVisits");
@@ -293,7 +294,7 @@ const Learning = () => {
                   </div>
                 ) : (
                   <video
-                    src="https://www.w3schools.com/html/mov_bbb.mp4"
+                    src={video1}
                     controls
                     autoPlay
                     className="w-full h-full object-cover"
