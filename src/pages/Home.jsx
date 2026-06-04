@@ -185,7 +185,6 @@ export default function Home() {
         description="Future Founders Academy equips young Kenyans with entrepreneurship skills through a hands-on 10-week bootcamp. Build your business, shape Kenya. Starting 22 June 2026."
         path="/"
       />
-
       {/* Hero */}
       <section className="relative min-h-screen flex items-center pt-32 pb-20 overflow-hidden">
         {/* Background effects */}
@@ -324,7 +323,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
       {/* Create / Launch / Grow */}
       <section className="py-24 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
@@ -362,7 +360,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
       {/* Programme Snapshot */}
       <section className="py-24 px-4 sm:px-6 lg:px-8 bg-navy-800/30">
         <div className="max-w-7xl mx-auto">
@@ -399,9 +396,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* Partners Carousel */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8">
+      <section className="py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
             <span className="text-teal-400 text-md font-display font-semibold uppercase tracking-widest">
@@ -426,11 +421,14 @@ export default function Home() {
             <div className="overflow-hidden">
               <div
                 ref={carouselRef}
-                className="flex transition-transform duration-500 ease-out"
+                className="flex"
                 style={{
-                  transform: `translateX(-${currentIndex * (100 / itemsPerView)}%)`,
+                  animation: isPlaying
+                    ? `scroll ${partners.length * 3}s linear infinite`
+                    : "none",
                 }}
               >
+                {/* Original partners */}
                 {partners.map((partner) => (
                   <div
                     key={partner.id}
@@ -456,42 +454,61 @@ export default function Home() {
                     </div>
                   </div>
                 ))}
+                {/* Duplicate partners for seamless loop */}
+                {partners.map((partner) => (
+                  <div
+                    key={`${partner.id}-duplicate`}
+                    className="flex-shrink-0 px-4"
+                    style={{ width: `${100 / itemsPerView}%` }}
+                  >
+                    <div className="bg-navy-800/50 rounded-xl p-6 border border-teal-500/20 hover:border-teal-500/40 transition-all duration-300 hover:-translate-y-1 group cursor-pointer">
+                      <div className="flex flex-col items-center text-center">
+                        <div className="w-40 h-32 flex items-center justify-center mb-4">
+                          <img
+                            src={partner.logo}
+                            alt={partner.name}
+                            className="max-w-full max-h-full object-contain opacity-80 group-hover:opacity-100 transition-opacity"
+                          />
+                        </div>
+                        <h3 className="text-white font-display font-semibold text-lg">
+                          {partner.name}
+                        </h3>
+                        <p className="text-slate-400 text-sm mt-1">
+                          {partner.description}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
+
+            {/* Dots Indicator */}
+            {partners.length > itemsPerView && (
+              <div className="flex justify-center gap-2 mt-8">
+                {Array.from({
+                  length: Math.max(
+                    1,
+                    Math.ceil(partners.length / itemsPerView),
+                  ),
+                }).map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => {
+                      setCurrentIndex(idx * itemsPerView);
+                    }}
+                    className={`h-2 rounded-full transition-all duration-300 ${
+                      Math.floor(currentIndex / itemsPerView) === idx
+                        ? "w-8 bg-teal-500"
+                        : "w-2 bg-navy-600 hover:bg-teal-400/50"
+                    }`}
+                  />
+                ))}
+              </div>
+            )}
           </div>
-
-          {/* Dots Indicator - Only show if more items than visible */}
-          {partners.length > itemsPerView && (
-            <div className="flex justify-center gap-2 mt-8">
-              {Array.from({
-                length: Math.max(1, Math.ceil(partners.length / itemsPerView)),
-              }).map((_, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => {
-                    setCurrentIndex(idx * itemsPerView);
-                  }}
-                  className={`h-2 rounded-full transition-all duration-300 ${
-                    Math.floor(currentIndex / itemsPerView) === idx
-                      ? "w-8 bg-teal-500"
-                      : "w-2 bg-navy-600 hover:bg-teal-400/50"
-                  }`}
-                />
-              ))}
-            </div>
-          )}
-
-          {/* Pause/Play Indicator */}
-          {partners.length > itemsPerView && (
-            <div className="text-center mt-4">
-              <p className="text-slate-500 text-sm">
-                {!isPlaying && "⏸️ Paused — hover to resume scrolling"}
-              </p>
-            </div>
-          )}
         </div>
       </section>
-
       {/* CTA Banner */}
       <section className="py-10 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
@@ -534,7 +551,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
       {/* QR Code Modal */}
       {showQrModal && (
         <div

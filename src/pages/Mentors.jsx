@@ -56,7 +56,7 @@ export default function Mentors() {
                     <img
                       src={mentor.image}
                       alt={mentor.name}
-                      className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
+                      className="w-full h-full object-cover object-[center_20%] transition-all duration-500 group-hover:scale-110"
                     />
 
                     {/* Overlay on hover */}
@@ -80,10 +80,6 @@ export default function Mentors() {
                     <h3 className="text-xl font-display font-bold text-white mb-1 group-hover:text-teal-400 transition-colors">
                       {mentor.name}
                     </h3>
-                    <p className="text-teal-400 font-body text-md mb-3">
-                      {mentor.role}
-                    </p>
-
                     <p className="text-slate-400 font-body text-md leading-relaxed line-clamp-3">
                       {mentor.bio}
                     </p>
@@ -137,7 +133,7 @@ export default function Mentors() {
                   <img
                     src={selectedMentor.image}
                     alt={selectedMentor.name}
-                    className="w-full h-full object-cover rounded-t-2xl"
+                    className="w-full h-full object-cover object-[center_25%] rounded-t-2xl"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-navy-800 to-transparent rounded-t-2xl" />
                 </div>
@@ -151,9 +147,6 @@ export default function Mentors() {
                   <h2 className="text-3xl font-display font-bold text-white mb-2">
                     {selectedMentor.name}
                   </h2>
-                  <p className="text-teal-400 font-body text-lg mb-6">
-                    {selectedMentor.role}
-                  </p>
 
                   <div className="prose prose-invert max-w-none">
                     <p className="text-slate-300 font-body leading-relaxed mb-6">
