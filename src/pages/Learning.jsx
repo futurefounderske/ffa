@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import SEOHead from "../components/SEOHead";
 import video1 from "../assets/images/gallery/video-1.mp4";
+import photo1 from "../assets/images/gallery/photo-1.jpeg";
 
 const Learning = () => {
   const [activeTab, setActiveTab] = useState("businessVisits");
@@ -263,11 +264,6 @@ const Learning = () => {
                     className="relative w-full h-full cursor-pointer group"
                     onClick={() => setIsVideoPlaying(true)}
                   >
-                    <img
-                      src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800"
-                      alt="Experiential Learning Preview"
-                      className="w-full h-full object-cover"
-                    />
                     <div className="absolute inset-0 bg-black/50 group-hover:bg-black/40 transition-all flex items-center justify-center">
                       <div className="w-20 h-20 rounded-full bg-teal-500/90 backdrop-blur-sm flex items-center justify-center transform transition-transform group-hover:scale-110">
                         <svg
