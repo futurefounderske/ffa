@@ -1,8 +1,9 @@
 import ciliacah from "../../assets/images/mentors/ciliacah.jpg"
-import francis from "../../assets/images/mentors/francis.png"
+import francis from "../../assets/images/mentors/kiarie.jpeg"
 import kevin from "../../assets/images/mentors/kevin.png"
 import moniq from "../../assets/images/mentors/moniq.jpg"
 import phil from "../../assets/images/mentors/phil.png"
+import nguyo from "../../assets/images/mentors/nguyo.jpeg";
 
 const mentors = [
     {
@@ -57,6 +58,17 @@ const mentors = [
         bio: "Francis is a passionate agribusiness entrepreneur involved in herb farming, aquaculture, poultry, and vegetable production. His sustainable, well-managed farming ventures enhance food security while generating diverse income streams. ",
         experience: "11+ years",
         companies: "Stanbic Bank Kenya",
+        linkedin: "#",
+        whatsapp: "#",
+    },
+    {
+        id: 6,
+        name: "Catherine Nguyo",
+        expertise: "Author & Transformation Cost",
+        image: nguyo,
+        bio: "Catherine is an author, trainer, transformational coach, and mentor dedicated to helping individuals heal, rediscover their identity, and live with purpose. ",
+        experience: "10+ years",
+        companies: "Future Founders Academy",
         linkedin: "#",
         whatsapp: "#",
     },

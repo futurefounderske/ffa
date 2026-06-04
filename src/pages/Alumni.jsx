@@ -1,24 +1,29 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import alumni from "../data/alumni/alumni";
 import SEOHead from "../components/SEOHead";
 
-const cohorts = [
-  "All",
-  "2023 - Cohort 1",
-  "2023 - Cohort 2",
-  "2024 - Cohort 1",
-  "2024 - Cohort 2",
-];
+const cohorts = ["All", "2025 - Cohort 1"];
 
 export default function Alumni() {
   const [selectedAlumni, setSelectedAlumni] = useState(null);
   const [activeCohort, setActiveCohort] = useState("All");
+  const [selectedVideo, setSelectedVideo] = useState(null);
+  const videoRef = useRef(null);
 
   const filteredAlumni =
     activeCohort === "All"
       ? alumni
       : alumni.filter((alum) => alum.cohort === activeCohort);
+
+  const handleVideoClick = (e, videoUrl) => {
+    e.stopPropagation();
+    setSelectedVideo(videoUrl);
+  };
+
+  const handleOpenModal = (alum) => {
+    setSelectedAlumni(alum);
+  };
 
   return (
     <>
@@ -72,14 +77,6 @@ export default function Alumni() {
             </motion.p>
           </div>
 
-          {/* Stats */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16"
-          ></motion.div>
-
           {/* Cohort Filters */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -116,19 +113,55 @@ export default function Alumni() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -30 }}
                   transition={{ duration: 0.4, delay: index * 0.1 }}
-                  onClick={() => setSelectedAlumni(alum)}
+                  onClick={() => handleOpenModal(alum)}
                   className="group cursor-pointer"
                 >
                   <div className="bg-navy-800/50 backdrop-blur-sm border border-white/5 rounded-2xl overflow-hidden transition-all duration-300 hover:border-teal-500/30 hover:shadow-xl hover:shadow-teal-500/10 hover:-translate-y-2">
-                    {/* Image */}
-                    <div className="relative h-56 overflow-hidden">
-                      <img
-                        src={alum.image}
-                        alt={alum.name}
+                    {/* Video Container with Thumbnail */}
+                    <div className="relative h-56 overflow-hidden bg-navy-900">
+                      {/* Video element for thumbnail - using video element to capture first frame */}
+                      <video
+                        src={alum.src}
                         className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
+                        muted
+                        preload="metadata"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-navy-900 via-navy-900/20 to-transparent" />
-                      <div className="absolute top-4 left-4">
+
+                      {/* Dark overlay for better play button visibility */}
+                      <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-all" />
+
+                      {/* Video Play Button */}
+                      <button
+                        onClick={(e) => handleVideoClick(e, alum.src)}
+                        className="absolute inset-0 flex items-center justify-center"
+                      >
+                        <div className="w-16 h-16 rounded-full bg-teal-500/90 backdrop-blur-sm flex items-center justify-center transform transition-transform group-hover:scale-110">
+                          <svg
+                            className="w-8 h-8 text-white ml-1"
+                            fill="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path d="M8 5v14l11-7z" />
+                          </svg>
+                        </div>
+                      </button>
+
+                      {/* Video Badge */}
+                      <div className="absolute top-4 left-4 z-10">
+                        <span className="inline-flex items-center gap-1 px-2 py-1 bg-teal-500/90 backdrop-blur-sm rounded-lg text-white text-xs font-medium">
+                          <svg
+                            className="w-3 h-3"
+                            fill="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path d="M8 5v14l11-7z" />
+                          </svg>
+                          Video Story
+                        </span>
+                      </div>
+
+                      <div className="absolute inset-0 bg-gradient-to-t from-navy-900 via-navy-900/20 to-transparent pointer-events-none" />
+                      <div className="absolute top-4 right-4 z-10">
                         <span className="inline-block px-3 py-1 bg-teal-500/90 backdrop-blur-sm rounded-full text-white text-md font-medium">
                           {alum.cohort}
                         </span>
@@ -140,14 +173,8 @@ export default function Alumni() {
                       <h3 className="text-xl font-display font-bold text-white mb-1 group-hover:text-teal-400 transition-colors">
                         {alum.name}
                       </h3>
-                      <p className="text-teal-400 font-body text-md mb-3">
-                        {alum.business}
-                      </p>
 
-                      <div className="flex items-center gap-2 mb-3">
-                        <span className="inline-block px-2 py-0.5 bg-navy-900/50 border border-white/10 rounded-full text-slate-400 text-md">
-                          {alum.industry}
-                        </span>
+                      <div className="flex items-center gap-2 mb-3 flex-wrap">
                         <span className="inline-flex items-center gap-1 text-slate-400 text-md">
                           <svg
                             className="w-3.5 h-3.5"
@@ -172,7 +199,7 @@ export default function Alumni() {
                         </span>
                       </div>
 
-                      <p className="text-slate-400 font-body text-md leading-relaxed line-clamp-2 mb-4">
+                      <p className="text-slate-400 font-body text-md leading-relaxed line-clamp-3 mb-4">
                         {alum.bio}
                       </p>
 
@@ -188,11 +215,11 @@ export default function Alumni() {
                               strokeLinecap="round"
                               strokeLinejoin="round"
                               strokeWidth={2}
-                              d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"
+                              d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
                             />
                           </svg>
                           <span className="text-md font-medium">
-                            {alum.achievement}
+                            Watch their story
                           </span>
                         </div>
                       </div>
@@ -217,7 +244,7 @@ export default function Alumni() {
           )}
         </div>
 
-        {/* Alumni Detail Modal */}
+        {/* Alumni Detail Modal with Video */}
         <AnimatePresence>
           {selectedAlumni && (
             <motion.div
@@ -225,7 +252,12 @@ export default function Alumni() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md"
-              onClick={() => setSelectedAlumni(null)}
+              onClick={() => {
+                setSelectedAlumni(null);
+                if (videoRef.current) {
+                  videoRef.current.pause();
+                }
+              }}
             >
               <motion.div
                 initial={{ scale: 0.9, opacity: 0, y: 20 }}
@@ -237,8 +269,13 @@ export default function Alumni() {
               >
                 {/* Close Button */}
                 <button
-                  onClick={() => setSelectedAlumni(null)}
-                  className="absolute top-4 right-4 z-10 w-10 h-10 bg-navy-900/80 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-navy-700 transition-colors"
+                  onClick={() => {
+                    setSelectedAlumni(null);
+                    if (videoRef.current) {
+                      videoRef.current.pause();
+                    }
+                  }}
+                  className="absolute top-4 right-4 z-20 w-10 h-10 bg-navy-900/80 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-navy-700 transition-colors"
                 >
                   <svg
                     className="w-5 h-5"
@@ -255,15 +292,21 @@ export default function Alumni() {
                   </svg>
                 </button>
 
-                {/* Profile Image */}
-                <div className="relative h-64 md:h-72">
-                  <img
-                    src={selectedAlumni.image}
-                    alt={selectedAlumni.name}
-                    className="w-full h-full object-cover rounded-t-2xl"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-navy-800 to-transparent rounded-t-2xl" />
-                  <div className="absolute top-4 left-4">
+                {/* Video Section - Plays directly in modal */}
+                <div className="relative bg-black">
+                  <video
+                    ref={videoRef}
+                    src={selectedAlumni.src}
+                    className="w-full rounded-t-2xl"
+                    controls
+                    autoPlay
+                    controlsList="nodownload"
+                    poster=""
+                  >
+                    Your browser does not support the video tag.
+                  </video>
+
+                  <div className="absolute top-4 right-4">
                     <span className="inline-block px-3 py-1 bg-teal-500/90 backdrop-blur-sm rounded-full text-white text-md font-medium">
                       {selectedAlumni.cohort}
                     </span>
@@ -271,18 +314,12 @@ export default function Alumni() {
                 </div>
 
                 {/* Profile Info */}
-                <div className="p-8 -mt-16 relative z-10">
+                <div className="p-8">
                   <h2 className="text-3xl font-display font-bold text-white mb-2">
                     {selectedAlumni.name}
                   </h2>
-                  <p className="text-teal-400 font-body text-lg mb-1">
-                    {selectedAlumni.business}
-                  </p>
 
-                  <div className="flex items-center gap-3 mb-6">
-                    <span className="inline-block px-3 py-1 bg-teal-500/10 border border-teal-500/20 rounded-full text-teal-400 text-md">
-                      {selectedAlumni.industry}
-                    </span>
+                  <div className="flex items-center gap-3 mb-6 flex-wrap">
                     <span className="inline-flex items-center gap-1 text-slate-400 text-md">
                       <svg
                         className="w-4 h-4"
@@ -313,48 +350,28 @@ export default function Alumni() {
                     </p>
                   </div>
 
-                  {/* Achievement */}
-                  <div className="bg-gradient-to-r from-teal-500/10 to-teal-500/5 border border-teal-500/20 rounded-xl p-4 mb-6">
-                    <div className="flex items-center gap-2 text-teal-400">
-                      <svg
-                        className="w-5 h-5"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"
-                        />
-                      </svg>
-                      <span className="font-medium">
-                        {selectedAlumni.achievement}
-                      </span>
-                    </div>
-                  </div>
-
                   {/* Testimonial */}
-                  <div className="bg-navy-900/50 border border-white/5 rounded-xl p-6 mb-6">
-                    <div className="flex items-start gap-3">
-                      <svg
-                        className="w-8 h-8 text-teal-400 flex-shrink-0 mt-1"
-                        fill="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-                      </svg>
-                      <h4 className="text-slate-300 font-body italic leading-relaxed">
-                        "{selectedAlumni.testimonial}"
-                      </h4>
+                  {selectedAlumni.testimonial && (
+                    <div className="bg-navy-900/50 border border-white/5 rounded-xl p-6 mb-6">
+                      <div className="flex items-start gap-3">
+                        <svg
+                          className="w-8 h-8 text-teal-400 flex-shrink-0 mt-1"
+                          fill="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+                        </svg>
+                        <h4 className="text-slate-300 font-body italic leading-relaxed">
+                          "{selectedAlumni.testimonial}"
+                        </h4>
+                      </div>
                     </div>
-                  </div>
+                  )}
 
                   {/* Social Links */}
                   <div className="flex gap-3">
                     {selectedAlumni.whatsapp &&
-                      selectedAlumni.whatsapp !== "" && (
+                      selectedAlumni.whatsapp !== "#" && (
                         <a
                           href={selectedAlumni.whatsapp}
                           target="_blank"
@@ -366,7 +383,7 @@ export default function Alumni() {
                       )}
 
                     {selectedAlumni.website &&
-                      selectedAlumni.website !== "" && (
+                      selectedAlumni.website !== "#" && (
                         <a
                           href={selectedAlumni.website}
                           target="_blank"
@@ -378,7 +395,7 @@ export default function Alumni() {
                       )}
 
                     {selectedAlumni.instagram &&
-                      selectedAlumni.instagram !== "" && (
+                      selectedAlumni.instagram !== "#" && (
                         <a
                           href={selectedAlumni.instagram}
                           target="_blank"
@@ -390,6 +407,66 @@ export default function Alumni() {
                       )}
                   </div>
                 </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Floating Video Modal for playing videos from grid */}
+        <AnimatePresence>
+          {selectedVideo && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/95 backdrop-blur-md"
+              onClick={() => {
+                setSelectedVideo(null);
+                if (videoRef.current) {
+                  videoRef.current.pause();
+                }
+              }}
+            >
+              <motion.div
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.9, opacity: 0 }}
+                transition={{ type: "spring", damping: 25, stiffness: 300 }}
+                className="relative max-w-4xl w-full"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <button
+                  onClick={() => {
+                    setSelectedVideo(null);
+                    if (videoRef.current) {
+                      videoRef.current.pause();
+                    }
+                  }}
+                  className="absolute -top-12 right-0 z-10 w-10 h-10 bg-navy-800/80 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-navy-700 transition-colors"
+                >
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </button>
+                <video
+                  src={selectedVideo}
+                  controls
+                  autoPlay
+                  className="w-full rounded-xl"
+                  controlsList="nodownload"
+                >
+                  Your browser does not support the video tag.
+                </video>
               </motion.div>
             </motion.div>
           )}

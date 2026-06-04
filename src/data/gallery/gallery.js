@@ -23,6 +23,7 @@ const gallery = [
     {
         id: 1,
         type: "video",
+        collection: "Pop-Up Market",
         src: video1,
         poster: photo1,
         alt: "Pop-Up Market",
@@ -32,6 +33,7 @@ const gallery = [
     {
         id: 2,
         type: "video",
+        collection: "Field Trip",
         src: video3,
         poster: photo2,
         alt: "Mentorship session",
@@ -41,6 +43,7 @@ const gallery = [
     {
         id: 3,
         type: "image",
+        collection: "Pop-Up Market",
         src: photo3,
         alt: "Bottling Company",
         title: "A Visit To Bottlers EA",
@@ -49,6 +52,7 @@ const gallery = [
     {
         id: 4,
         type: "image",
+        collection: "Pop-Up Market",
         src: photo5,
         alt: "Pop-Up Market",
         title: "The Pop-Up Market",
@@ -57,6 +61,7 @@ const gallery = [
     {
         id: 5,
         type: "image",
+        collection: "Pop-Up Market",
         src: photo6,
         alt: "Stall",
         title: "Curios On Sale",
@@ -65,6 +70,7 @@ const gallery = [
     {
         id: 6,
         type: "image",
+        collection: "Pop-Up Market",
         src: photo8,
         alt: "Stalls",
         title: "Jerseys For Everyone",
@@ -73,6 +79,7 @@ const gallery = [
     {
         id: 7,
         type: "image",
+        collection: "Pop-Up Market",
         src: photo11,
         alt: "Snacks",
         title: "Food For Thought",
@@ -81,6 +88,7 @@ const gallery = [
     {
         id: 8,
         type: "image",
+        collection: "Pop-Up Market",
         src: photo13,
         alt: "Phone Cases",
         title: "Your Phone Stays Safe",
@@ -89,6 +97,7 @@ const gallery = [
     {
         id: 9,
         type: "image",
+        collection: "Pop-Up Market",
         src: photo14,
         alt: "Cookies",
         title: "Cookies Anyone?",
@@ -97,6 +106,7 @@ const gallery = [
     {
         id: 10,
         type: "image",
+        collection: "Pop-Up Market",
         src: photo14,
         alt: "Smiling",
         title: "A Fun Time",
@@ -105,6 +115,7 @@ const gallery = [
     {
         id: 11,
         type: "image",
+        collection: "Pop-Up Market",
         src: photo19,
         alt: "Suns Out",
         title: "At A Glance",
@@ -113,6 +124,7 @@ const gallery = [
     {
         id: 12,
         type: "image",
+        collection: "Field Trip",
         src: photo2,
         alt: "Tour",
         title: "Delish & Nutri Factory Tour",
