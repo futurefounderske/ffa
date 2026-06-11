@@ -8,6 +8,7 @@ import Contact from "./pages/Contact";
 import ScrollToTop from "./components/ScrollToTop";
 import Gallery from "./pages/Gallery";
 import Mentors from "./pages/Mentors";
+import Founders from "./pages/Founders";
 import FAQ from "./pages/FAQ";
 import Alumni from "./pages/Alumni";
 import Program from "./pages/Program";
@@ -26,6 +27,7 @@ export default function App() {
             {/* <Route path="/contact" element={<Contact />} /> */}
             <Route path="/gallery" element={<Gallery />} />
             <Route path="/mentors" element={<Mentors />} />
+            <Route path="/founders" element={<Founders />} />
             <Route path="/faq" element={<FAQ />} />
             <Route path="/alumni" element={<Alumni />} />
             <Route path="/program" element={<Program />} />

@@ -22,6 +22,7 @@ const navLinks = [
     dropdown: [
       { label: "Mentors & Facilitators", to: "/mentors" },
       { label: "Alumni Network", to: "/alumni" },
+      { label: "Founders", to: "/founders" },
     ],
   },
   { label: "Gallery", to: "/gallery" },
