@@ -180,13 +180,16 @@ export default function Home() {
           <div className="flex items-center justify-between gap-12">
             {/* Left Content */}
             <div className="max-w-3xl flex-1">
-              {/* Badge */}
-              <div className="inline-flex items-center gap-2 bg-teal-500/10 border border-teal-500/20 rounded-full px-4 py-2 mb-8 animate-fade-in">
+              {/* Badge - NOW CLICKABLE */}
+              <button
+                onClick={handleApplyClick}
+                className="inline-flex items-center gap-2 bg-teal-500/10 border border-teal-500/20 rounded-full px-4 py-2 mb-8 flash-banner cursor-pointer transition-all duration-200 hover:scale-105 hover:bg-teal-500/20 focus:outline-none focus:ring-2 focus:ring-teal-400 focus:ring-offset-2 focus:ring-offset-navy-900"
+              >
                 <span className="w-2 h-2 bg-teal-400 rounded-full animate-pulse" />
-                <span className="text-teal-400 text-md font-display font-semibold uppercase tracking-widest">
+                <span className="text-md font-display font-semibold uppercase tracking-widest flash-text">
                   Young Adults Bootcamp · Starting 22 June 2026
                 </span>
-              </div>
+              </button>
 
               <h1 className="font-display font-extrabold leading-[1.05] mb-6">
                 <span

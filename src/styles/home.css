@@ -73,3 +73,23 @@
     transform: translateX(-50%);
   }
 }
+
+.flash-banner {
+  animation: flash 1s infinite;
+  transition: all 2.8s ease;
+}
+
+@keyframes flash {
+  0%,
+  100% {
+    background-color: rgba(20, 184, 166, 0.1);
+    transform: scale(1);
+    color: #ffffff;
+  }
+
+  50% {
+    background-color: rgb(20, 184, 166);
+    transform: scale(1.02);
+    color: #ffffff;
+  }
+}
