@@ -30,7 +30,7 @@ const mentors = [
     },
     {
         id: 3,
-        name: "Phlimart Otieno",
+        name: "Philmart Otieno",
         expertise: "Clean Energy & Innovation",
         image: phil,
         bio: "Philmart Otieno is the CEO of PGEL Energy Limited, a Kenyan company committed to expanding access to affordable and reliable clean energy solutions.\n\nHe leads the company’s strategy in solar installations, hybrid systems, and energy-efficiency services designed to reduce costs and improve power reliability for homes, institutions, and businesses.\n\nDriven by a passion for impact, he continues to champion partnerships that advance Kenya’s transition to sustainable energy.",
