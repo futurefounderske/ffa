@@ -1,10 +1,5 @@
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  useLocation,
-  useEffect,
-} from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
@@ -25,6 +20,7 @@ import ReactGA from "react-ga4";
 // Initialize Google Analytics
 try {
   ReactGA.initialize(import.meta.env.VITE_GA_TRACKING_ID);
+  console.log("Done");
 } catch (error) {
   console.error("Failed to initialize Google Analytics:", error);
 }
