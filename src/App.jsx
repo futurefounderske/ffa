@@ -45,8 +45,8 @@ export default function App() {
       <div className="relative min-h-screen flex flex-col">
         <Navbar />
         <main className="flex-1">
-          <TrackPageView />
           <Routes>
+            <TrackPageView />
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             {/* <Route path="/contact" element={<Contact />} /> */}
