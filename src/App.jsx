@@ -14,6 +14,13 @@ import Alumni from "./pages/Alumni";
 import Program from "./pages/Program";
 import Learning from "./pages/Learning";
 
+// Initialize Google Analytics
+try {
+  ReactGA.initialize(import.meta.env.VITE_GA_TRACKING_ID);
+} catch (error) {
+  console.error("Failed to initialize Google Analytics:", error);
+}
+
 export default function App() {
   return (
     <BrowserRouter>
