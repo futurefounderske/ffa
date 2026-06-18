@@ -29,7 +29,10 @@ const TrackPageView = () => {
   const location = useLocation();
 
   useEffect(() => {
-    ReactGA.send({ hitType: "pageview", page: location.pathname });
+    ReactGA.send({
+      hitType: "pageview",
+      page: window.location.pathname,
+    });
   }, [location]);
 
   return null;
