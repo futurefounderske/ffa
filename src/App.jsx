@@ -20,7 +20,6 @@ import ReactGA from "react-ga4";
 // Initialize Google Analytics
 try {
   ReactGA.initialize(import.meta.env.VITE_GA_TRACKING_ID);
-  console.log("Done");
 } catch (error) {
   console.error("Failed to initialize Google Analytics:", error);
 }
