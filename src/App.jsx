@@ -1,4 +1,10 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  useLocation,
+  useEffect,
+} from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
@@ -14,12 +20,25 @@ import Alumni from "./pages/Alumni";
 import Program from "./pages/Program";
 import Learning from "./pages/Learning";
 
+import ReactGA from "react-ga4";
+
 // Initialize Google Analytics
 try {
   ReactGA.initialize(import.meta.env.VITE_GA_TRACKING_ID);
 } catch (error) {
   console.error("Failed to initialize Google Analytics:", error);
 }
+
+// Track page views
+const TrackPageView = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    ReactGA.send({ hitType: "pageview", page: location.pathname });
+  }, [location]);
+
+  return null;
+};
 
 export default function App() {
   return (
@@ -28,6 +47,7 @@ export default function App() {
       <div className="relative min-h-screen flex flex-col">
         <Navbar />
         <main className="flex-1">
+          <TrackPageView />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
